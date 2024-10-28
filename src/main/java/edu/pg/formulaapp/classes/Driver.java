@@ -1,6 +1,11 @@
 package edu.pg.formulaapp.classes;
 
-public class Driver implements Comparable<Driver> {
+import java.io.Serializable;
+
+/**
+ * A class representing a driver in a Formula 1 racing team.
+ */
+public class Driver implements Comparable<Driver>, Serializable {
     private String name;
     private String surname;
     private int age;
@@ -106,7 +111,65 @@ public class Driver implements Comparable<Driver> {
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
-                ", team=" + team +
+                ", team=" + team.getTeamName() +
                 '}';
+    }
+
+    /**
+     * A builder class for the Driver object.
+     */
+    public static class DriverBuilder {
+        private String name;
+        private String surname;
+        private int age;
+        private Team team;
+
+        /**
+         * Sets the first name of the driver.
+         * @param name the first name of the driver.
+         * @return the DriverBuilder object.
+         */
+        public DriverBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        /**
+         * Sets the surname of the driver.
+         * @param surname the surname of the driver.
+         * @return the DriverBuilder object.
+         */
+        public DriverBuilder setSurname(String surname) {
+            this.surname = surname;
+            return this;
+        }
+
+        /**
+         * Sets the age of the driver.
+         * @param age the age of the driver.
+         * @return the DriverBuilder object.
+         */
+        public DriverBuilder setAge(int age) {
+            this.age = age;
+            return this;
+        }
+
+        /**
+         * Sets the team to which the driver belongs.
+         * @param team the team to which the driver belongs.
+         * @return the DriverBuilder object.
+         */
+        public DriverBuilder setTeam(Team team) {
+            this.team = team;
+            return this;
+        }
+
+        /**
+         * Builds a new Driver object with the specified attributes.
+         * @return a new Driver object.
+         */
+        public Driver build() {
+            return new Driver(name, surname, age, team);
+        }
     }
 }
