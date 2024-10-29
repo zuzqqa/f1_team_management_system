@@ -1,15 +1,40 @@
 package edu.pg.formulaapp.classes;
 
 import java.io.Serializable;
+import java.util.Objects;
+import java.util.UUID;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /**
  * A class representing a driver in a Formula 1 racing team.
  */
+@Entity
+@Table(name = "drivers")
 public class Driver implements Comparable<Driver>, Serializable {
+    @Id
+    @GeneratedValue
+    private UUID id;
+
     private String name;
     private String surname;
     private int age;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_id")
     private Team team;
+
+    /**
+     * Constructs a new Driver instance.
+     */
+    public Driver() {
+    }
     
     /**
      * Constructs a new Driver instance with the specified attributes.
@@ -20,12 +45,23 @@ public class Driver implements Comparable<Driver>, Serializable {
      * @param team    the team to which the driver belongs. This value may be null if the driver is not currently associated with any team.
      */
     public Driver(String name, String surname, int age, Team team) {
+        if (name == null || name.isEmpty() || surname == null || surname.isEmpty() || age <= 0) {
+            throw new IllegalArgumentException("Invalid driver details");
+        }
         this.name = name;
         this.surname = surname;
         this.age = age;
         this.team = team;
     }
-    
+
+    /**
+     * Returns the unique identifier for the driver.
+     * @return the unique identifier for the driver.
+     */
+    public UUID getId() {
+        return id;
+    }
+
     /**
      * Returns the first name of the driver.
      * @return the first name of the driver.
@@ -83,9 +119,9 @@ public class Driver implements Comparable<Driver>, Serializable {
      */
     @Override
     public int hashCode() {
-        return name.hashCode() + surname.hashCode();
+        return Objects.hash(name, surname);
     }
-    
+
     /**
      * Indicates whether some other object is "equal to" this one.
      *
@@ -97,7 +133,7 @@ public class Driver implements Comparable<Driver>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Driver driver = (Driver) o;
-        return name.equals(driver.name) && surname.equals(driver.surname);
+        return Objects.equals(name, driver.name) && Objects.equals(surname, driver.surname);
     }
 
     /**
@@ -111,7 +147,7 @@ public class Driver implements Comparable<Driver>, Serializable {
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", age=" + age +
-                ", team=" + team.getTeamName() +
+                ", team=" + (team != null ? team.getTeamName() : "No team") +
                 '}';
     }
 

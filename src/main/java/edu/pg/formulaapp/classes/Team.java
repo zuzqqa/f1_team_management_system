@@ -3,23 +3,53 @@ package edu.pg.formulaapp.classes;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 /**
  * A class representing a Formula 1 racing team.
  */
+@Entity
+@Table(name = "teams")
 public class Team implements Comparable<Team>, Serializable {
+    @Id
+    @GeneratedValue
+    private UUID id;
+
     private String teamName;
+
+    @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     private List<Driver> drivers;
 
+    /**
+     * Constructs a new Team instance.
+     */
+    public Team() {
+    }
+    
     /** 
      * Constructs a new Team instance with the specified attributes.
      * 
      * @param teamName the name of the team. This value cannot be null or empty.
-     * @param drivers  the list of drivers associated with the team. This value cannot be null.
+     * @param drivers  the list of drivers associated with the team. This value may be null but should be handled gracefully.
      */
     public Team(String teamName, List<Driver> drivers) {
+        if (teamName == null || teamName.isEmpty()) {
+            throw new IllegalArgumentException("Team name cannot be null or empty");
+        }
         this.teamName = teamName;
         this.drivers = drivers;
+        if (drivers != null) {
+            for (Driver driver : drivers) {
+                driver.setTeam(this); 
+            }
+        }
     }
 
     /**
@@ -52,6 +82,11 @@ public class Team implements Comparable<Team>, Serializable {
      */
     public void setDrivers(List<Driver> drivers) {
         this.drivers = drivers;
+        if (drivers != null) {
+            for (Driver driver : drivers) {
+                driver.setTeam(this); // Ensure drivers are aware of their team
+            }
+        }
     }
 
     /** 
@@ -72,7 +107,7 @@ public class Team implements Comparable<Team>, Serializable {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(teamName, drivers);
+        return Objects.hash(teamName);
     }
 
     /** 
@@ -86,8 +121,7 @@ public class Team implements Comparable<Team>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Team team = (Team) o;
-        return Objects.equals(teamName, team.teamName) &&
-                Objects.equals(drivers, team.drivers);
+        return Objects.equals(teamName, team.teamName);
     }
 
     /** 
@@ -102,7 +136,7 @@ public class Team implements Comparable<Team>, Serializable {
             for (Driver driver : drivers) {
                 driversList.append(driver != null ? driver.toString() : "No driver available").append(", ");
             }
-            // Usuwamy ostatni przecinek i spację, jeśli są kierowcy
+            // Remove the last comma and space if there are drivers
             if (driversList.length() > 0) {
                 driversList.setLength(driversList.length() - 2);
             }
@@ -115,13 +149,13 @@ public class Team implements Comparable<Team>, Serializable {
                 '}';
     }
 
-
     /**
      * Adds a driver to the team.
      * @param driver the driver to be added to the team.
      */
     public void addDriver(Driver driver) {
-        drivers.add(driver); 
+        drivers.add(driver);
+        driver.setTeam(this); // Ensure the driver knows about the team
     }
     
     /**
