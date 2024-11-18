@@ -1,5 +1,6 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
     "java.configuration.updateBuildConfiguration": "interactive",
-    "docwriter.style": "Javadoc"
+    "docwriter.style": "Javadoc",
+    "java.compile.nullAnalysis.mode": "automatic"
 }
