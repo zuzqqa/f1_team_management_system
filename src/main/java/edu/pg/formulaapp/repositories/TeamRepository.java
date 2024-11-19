@@ -1,10 +1,11 @@
 package edu.pg.formulaapp.repositories;
 
-import edu.pg.formulaapp.classes.Team;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import edu.pg.formulaapp.classes.Team.Team;
+
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -12,8 +13,8 @@ import java.util.UUID;
  */
 @Repository
 public interface TeamRepository extends JpaRepository<Team, UUID> {
-    /**
-     * Find team by team name
-     */
-    List<Team> findByTeamName(String teamName);
+    Optional<Team> findById(UUID id);
+    
+    // Pobierz zespół po nazwie
+    Optional<Team> findByTeamName(String teamName);
 }

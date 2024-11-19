@@ -1,61 +1,49 @@
 package edu.pg.formulaapp.services;
 
-import edu.pg.formulaapp.classes.Driver;
-import edu.pg.formulaapp.repositories.DriverRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import edu.pg.formulaapp.classes.Driver.Driver;
+import edu.pg.formulaapp.repositories.DriverRepository;
+import jakarta.persistence.EntityNotFoundException;
 
-/**
- * Service class for Driver entity.
- */
+import java.util.List;
+import java.util.UUID;
+
 @Service
 public class DriverService {
-    private final DriverRepository driverRepository;
 
-    /**
-     * Constructor for DriverService class.
-     * 
-     * @param driverRepository the driver repository
-     */
-    @Autowired
-    public DriverService(DriverRepository driverRepository) {
+    private final DriverRepository driverRepository;
+    private final TeamService teamService;
+
+    public DriverService(DriverRepository driverRepository, TeamService teamService) {
         this.driverRepository = driverRepository;
+        this.teamService = teamService;
     }
 
-    /**
-     * Method to save driver.
-     * 
-     * @param driver the driver to save
-     * @return Driver.
-     */
     public Driver save(Driver driver) {
         return driverRepository.save(driver);
     }
 
-    /**
-     * Method to delete a driver by name and surname.
-     * 
-     * @param name the driver's name
-     * @param surname the driver's surname
-     * @return true if the driver was deleted, false otherwise
-     */
-    public boolean deleteByNameAndSurname(String name, String surname) {
-        List<Driver> driversToDelete = driverRepository.findByNameAndSurname(name, surname);
-        if (!driversToDelete.isEmpty()) {
-            driverRepository.delete(driversToDelete.get(0));
-            return true;
-        }
-        return false;
+    public Driver getDriverById(UUID id) {
+        return driverRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Driver not found"));
     }
 
-    /**
-     * Method to get all drivers.
-     * 
-     * @return List of all drivers.
-     */
     public List<Driver> getAllDrivers() {
         return driverRepository.findAll();
+    }
+
+    public Driver updateDriver(UUID id, Driver driverDetails) {
+        Driver existingDriver = getDriverById(id);
+        existingDriver.setName(driverDetails.getName());
+        existingDriver.setSurname(driverDetails.getSurname());
+        existingDriver.setAge(driverDetails.getAge());
+        existingDriver.setTeam(driverDetails.getTeam());
+        return driverRepository.save(existingDriver);
+    }
+
+    public void deleteDriver(UUID id) {
+        Driver driver = getDriverById(id);
+        driverRepository.delete(driver);
     }
 }

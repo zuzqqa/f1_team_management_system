@@ -12,9 +12,9 @@
 
     <properties>
         <java.version>21</java.version>
-        <spring-boot.version>3.2.5</spring-boot.version> <!-- Specify the Spring Boot version -->
-        <h2.version>2.1.214</h2.version> <!-- Specify the H2 version -->
-        <lombok.version>1.18.28</lombok.version> <!-- Specify the Lombok version -->
+        <spring-boot.version>3.2.5</spring-boot.version> 
+        <h2.version>2.1.214</h2.version> 
+        <lombok.version>1.18.28</lombok.version> 
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
@@ -23,12 +23,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
-            <version>${spring-boot.version}</version> <!-- Use the property for version -->
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>${spring-boot.version}</version> <!-- Use the property for version -->
+            <version>${spring-boot.version}</version> 
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -39,13 +39,13 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version> <!-- Specify the version -->
+            <version>${lombok.version}</version> 
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <version>${spring-boot.version}</version> <!-- Use the property for version -->
+            <version>${spring-boot.version}</version> 
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -54,6 +54,11 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -61,7 +66,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring-boot.version}</version> <!-- Specify the Spring Boot version -->
+                <version>${spring-boot.version}</version> 
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -70,6 +75,9 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>

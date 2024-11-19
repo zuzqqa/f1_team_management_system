@@ -1,9 +1,10 @@
-package edu.pg.formulaapp.classes;
+package edu.pg.formulaapp.classes.Driver;
 
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
+import edu.pg.formulaapp.classes.Team.Team;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -102,6 +103,30 @@ public class Driver implements Comparable<Driver>, Serializable {
         this.team = team;
     }
 
+    /**
+     * Sets the surname of the driver.
+     * @param surname the surname of the driver.
+     */
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    /**
+     * Sets the first name of the driver.
+     * @param name the first name of the driver.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the age of the driver.
+     * @param age the age of the driver.
+     */
+    public void setAge(int age) {
+        this.age = age;
+    }
+    
     /**
      * Compares this Driver object with the specified Driver object for order.
      * @param o the Driver object to be compared.

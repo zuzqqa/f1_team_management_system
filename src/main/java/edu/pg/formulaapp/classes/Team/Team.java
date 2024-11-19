@@ -1,4 +1,4 @@
-package edu.pg.formulaapp.classes;
+package edu.pg.formulaapp.classes.Team;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+import edu.pg.formulaapp.classes.Driver.Driver;
 /**
  * A class representing a Formula 1 racing team.
  */
@@ -66,6 +67,14 @@ public class Team implements Comparable<Team>, Serializable {
      */
     public List<Driver> getDrivers() {
         return drivers;
+    }
+
+    /**
+     * Returns the unique identifier for the team.
+     * @return the unique identifier for the team.
+     */
+    public UUID getId() {
+        return id;
     }
 
     /**
