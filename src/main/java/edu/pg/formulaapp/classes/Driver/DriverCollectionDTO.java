@@ -4,8 +4,19 @@ package edu.pg.formulaapp.classes.Driver;
  * DTO for Driver entity
  */
 public class DriverCollectionDTO {
+    /**
+     * Id of the driver
+     */
     public String id;
+
+    /**
+     * Name of the driver
+     */
     public String name;
+
+    /**
+     * Surname of the driver
+     */
     public String surname;
 
     /**

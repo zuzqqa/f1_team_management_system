@@ -7,15 +7,31 @@ import java.util.stream.Collectors;
  * A class representing a DTO for Team entity.
  */
 public class TeamReadDTO {
+    /**
+     * The id of the team.
+     */
     public String id;
+
+    /**
+     * The name of the team.
+     */
     public String teamName;
+
+    /**
+     * The names of the drivers in the team.
+     */
     private List<String> driversNames;
     
     /**
+     * Constructs a new TeamReadDTO instance.
+     */
+    public TeamReadDTO() {}
+
+    /**
      * Constructs a new TeamReadDTO instance with the specified attributes.
-     * @param id 
-     * @param teamName 
-     * @param driversNames
+     * @param id id of the team
+     * @param teamName name of the team
+     * @param driversNames names of the drivers in the team
      */
     public TeamReadDTO(String id, String teamName, List<String> driversNames) {
         this.id = id;

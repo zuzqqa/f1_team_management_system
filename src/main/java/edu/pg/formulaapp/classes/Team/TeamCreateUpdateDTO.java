@@ -2,17 +2,29 @@ package edu.pg.formulaapp.classes.Team;
 
 import java.util.List;
 
+import edu.pg.formulaapp.classes.Driver.DriverCreateUpdateDTO;
 import jakarta.validation.constraints.NotEmpty;
 
 /**
  * A class representing a DTO for creating and updating a team.
  */
 public class TeamCreateUpdateDTO {
+    /**
+     * The name of the team.
+     */
     @NotEmpty(message = "Team name cannot be null or empty")
     private String teamName;
 
-    private List<String> driversIds;
+    /**
+     * The list of drivers associated with the team.
+     */
+    private List<DriverCreateUpdateDTO> drivers;
 
+    /**
+     * Constructs a new TeamCreateUpdateDTO instance.
+     */
+    public TeamCreateUpdateDTO() {}
+    
     /**
      * Returns the name of the team.
      * @return the name of the team.
@@ -25,8 +37,8 @@ public class TeamCreateUpdateDTO {
      * Returns the list of drivers associated with the team.
      * @return the list of drivers associated with the team.
      */
-    public List<String> getDriversIds() {
-        return driversIds;
+    public List<DriverCreateUpdateDTO> getDrivers() {
+        return drivers;
     }
 
     /**
@@ -39,9 +51,9 @@ public class TeamCreateUpdateDTO {
 
     /**
      * Sets the list of drivers associated with the team.
-     * @param driversIds the list of drivers associated with the team.
+     * @param drivers the list of drivers associated with the team.
      */
-    public void setDriversIds(List<String> driversIds) {
-        this.driversIds = driversIds;
+    public void setDrivers(List<DriverCreateUpdateDTO> drivers) {
+        this.drivers = drivers;
     }
 }

@@ -9,6 +9,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Application {
     /** 
+     * Default constructor for the Application class.
+     */
+    public Application() {}
+
+    /** 
      * The main method of the application.
      * 
      * @param args the command line arguments.

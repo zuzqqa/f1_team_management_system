@@ -15,13 +15,29 @@ import edu.pg.formulaapp.services.TeamService;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Controller class responsible for handling HTTP requests related to drivers.
+ */
 @RestController
 @RequestMapping("/drivers")
 public class DriverController {
-
+    /**
+     * The DriverService instance responsible for handling driver-related logic.
+     */
     private final DriverService driverService;
+
+    /**
+     * The TeamService instance responsible for handling team-related logic.
+     */
     private final TeamService teamService;
 
+    /**
+     * Constructor for the DriverController class.
+     * @param driverService the service responsible for handling driver-related logic,
+     *                      such as retrieving, updating, or managing driver data.
+     * @param teamService teamService the service responsible for handling team-related logic,
+     *                    including managing team assignments and interactions with drivers.
+     */
     public DriverController(DriverService driverService, TeamService teamService) {
         this.driverService = driverService;
         this.teamService = teamService;
@@ -37,11 +53,9 @@ public class DriverController {
     public ResponseEntity<DriverReadDTO> createDriver(@RequestBody DriverCreateUpdateDTO dto) {
         Team team = null;
 
-        // Jeśli ID zespołu jest podane, sprawdzamy czy istnieje
         if (dto.getTeamIDString() != null && !dto.getTeamIDString().isEmpty()) {
             team = teamService.getTeamByID(dto.getTeamIDString());
         } else if (dto.getTeamName() != null && !dto.getTeamName().isEmpty()) {
-            // Jeśli zespół jest określony przez nazwę, sprawdzamy lub tworzymy go
             team = teamService.getOrCreateTeamByName(dto.getTeamName());
         }
 
@@ -98,17 +112,14 @@ public class DriverController {
      */
     @PutMapping("/{id}")
     public ResponseEntity<DriverReadDTO> updateDriver(@PathVariable UUID id, @RequestBody DriverCreateUpdateDTO dto) {
-        Team team = null; // Default: no team
+        Team team = null;
 
-        // Check if a team name is provided and associate the team if found
         if (dto.getTeamName() != null && !dto.getTeamName().isEmpty()) {
             team = teamService.getOrCreateTeamByName(dto.getTeamName());
         }
 
-        // Create the updated driver
         Driver updatedDriver = new Driver(dto.getName(), dto.getSurname(), dto.getAge(), team);
 
-        // Update the driver in the database
         Driver driver = driverService.updateDriver(id, updatedDriver);
         String teamName = (driver.getTeam() != null) ? driver.getTeam().getTeamName() : "No Team";
         DriverReadDTO response = new DriverReadDTO(driver.getId().toString(), driver.getName(), driver.getSurname(), driver.getAge(), teamName);

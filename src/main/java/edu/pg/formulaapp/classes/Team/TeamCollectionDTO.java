@@ -2,9 +2,24 @@ package edu.pg.formulaapp.classes.Team;
 
 import java.util.List;
 
+/**
+ * Class TeamCollectionDTO is a class that represents the data transfer object for the team.
+ * It contains the id of the team, the name of the team and the names of the drivers in the team.
+ */
 public class TeamCollectionDTO {
+    /**
+     * The id of the team.
+     */
     private String id;
+
+    /**
+     * The name of the team.
+     */
     private String teamName;
+
+    /**
+     * The names of the drivers in the team.
+     */
     private List<String> driverNames; 
 
     /**

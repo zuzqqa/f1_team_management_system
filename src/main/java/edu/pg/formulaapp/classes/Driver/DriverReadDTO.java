@@ -4,10 +4,29 @@ package edu.pg.formulaapp.classes.Driver;
  * DTO for reading Driver entity
  */
 public class DriverReadDTO {
+    /**
+     * The `id` variable stores the ID of the driver.
+     */
     private String id;
+
+    /**
+     * The `name` variable stores the name of the driver.
+     */
     private String name;
+
+    /**
+     * The `surname` variable stores the surname of the driver.
+     */
     private String surname;
+
+    /**
+     * The `age` variable stores the age of the driver.
+     */
     private int age;
+
+    /**
+     * The `teamName` variable stores the name of the team associated with the driver.
+     */
     private String teamName;
 
     /**

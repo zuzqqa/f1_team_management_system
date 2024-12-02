@@ -19,20 +19,28 @@ import edu.pg.formulaapp.classes.Driver.Driver;
 @Entity
 @Table(name = "teams")
 public class Team implements Comparable<Team>, Serializable {
+    /**
+     * The unique identifier for the team.
+     */
     @Id
     @GeneratedValue
     private UUID id;
 
+    /**
+     * The name of the team.
+     */
     private String teamName;
 
+    /**
+     * The list of drivers associated with the team.
+     */
     @OneToMany(mappedBy = "team", fetch = FetchType.EAGER)
     private List<Driver> drivers;
 
     /**
      * Constructs a new Team instance.
      */
-    public Team() {
-    }
+    public Team() {}
     
     /** 
      * Constructs a new Team instance with the specified attributes.
@@ -145,7 +153,6 @@ public class Team implements Comparable<Team>, Serializable {
             for (Driver driver : drivers) {
                 driversList.append(driver != null ? driver.toString() : "No driver available").append(", ");
             }
-            // Remove the last comma and space if there are drivers
             if (driversList.length() > 0) {
                 driversList.setLength(driversList.length() - 2);
             }
@@ -171,8 +178,20 @@ public class Team implements Comparable<Team>, Serializable {
      * A builder class for the Team object.
      */
     public static class TeamBuilder {
+        /**
+         * The name of the team.
+         */
         private String teamName;
+
+        /**
+         * The list of drivers associated with the team.
+         */
         private List<Driver> drivers;
+
+        /**
+         * Constructs a new TeamBuilder instance.
+         */
+        public TeamBuilder() {}
 
         /**
          * Sets the name of the team.

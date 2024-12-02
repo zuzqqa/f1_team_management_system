@@ -19,14 +19,31 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "drivers")
 public class Driver implements Comparable<Driver>, Serializable {
+    /**
+     * Id of the driver.
+     */
     @Id
     @GeneratedValue
     private UUID id;
 
+    /**
+     * First name of the driver.
+     */
     private String name;
+
+    /**
+     * Surname of the driver.
+     */
     private String surname;
+
+    /**
+     * Age of the driver.
+     */
     private int age;
 
+    /**
+     * Team to which the driver belongs.
+     */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Team team;
@@ -180,11 +197,31 @@ public class Driver implements Comparable<Driver>, Serializable {
      * A builder class for the Driver object.
      */
     public static class DriverBuilder {
+        /**
+         * First name of the driver.
+         */
         private String name;
+
+        /**
+         * Surname of the driver.
+         */
         private String surname;
+
+        /**
+         * Age of the driver.
+         */
         private int age;
+
+        /**
+         * Team to which the driver belongs.
+         */
         private Team team;
 
+        /**
+         * Constructs a new DriverBuilder instance.
+         */
+        public DriverBuilder() {}
+        
         /**
          * Sets the first name of the driver.
          * @param name the first name of the driver.
